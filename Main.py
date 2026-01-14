@@ -9,7 +9,11 @@ def window_active(window):
 		return True
 	except(turtle.Terminator, tk.TclError):
 		return False
-
+	
+def move(turtle, index, pos):
+	local_position = pos[index]
+	turtle.teleport(local_position[0],local_position[1])
+	
 def create_turtle(window, shape):
 	local_turtle = turtle.Turtle()
 	local_turtle.penup()
@@ -17,6 +21,7 @@ def create_turtle(window, shape):
 	window.addshape(shape)
 	local_turtle.shape(shape)
 	return local_turtle
+
 def main():
 	window = turtle.Screen()
 	window.setup(600,600)
@@ -24,23 +29,18 @@ def main():
 	combat_turtle = turtle.Turtle()
 	#combat_turtle.hideturtle()
 	combat_turtle.penup()
-	combat_turtle.goto(0, 0)
 	text_turtle= create_turtle(window, "Images/combat-text.gif")
 	text_turtle.teleport(-200,-200)
 	text_x = text_turtle.xcor()
 	text_y = text_turtle.ycor()
-	combat_turtle.teleport((text_x - 70), text_y-11)
-	COMBAT_POSITIONS = [(text_x-70,text_y+33),(text_x-70, text_y+11.5),(text_x -70, text_y-11)]
-	step = 20
+	COMBAT_POSITIONS = [(text_x-70,text_y+33),(text_x-70, text_y+11.5),(text_x -70, text_y-11),(text_x-70,text_y-34)]
+	test = COMBAT_POSITIONS[0]
+	combat_index = 0
+	test = COMBAT_POSITIONS[combat_index]
+	combat_turtle.teleport(test[0],test[1])
 
-	def move(dx, dy):
-		try:
-			x, y = combat_turtle.position()
-			combat_turtle.clear()
-			combat_turtle.goto(x + dx, y + dy)
-			window.update()
-		except (turtle.Terminator, tk.TclError):
-			pass
+	
+		
 
 	def move_up():
 		move(0, step)
