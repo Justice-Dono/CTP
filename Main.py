@@ -38,6 +38,9 @@ def move_down():
         global_index += 1
     move(global_cursor, global_index, COMBAT_POSITIONS)
 
+def enter():
+	print(global_index)
+
 def create_turtle(window, shape):
 	local_turtle = turtle.Turtle()
 	local_turtle.penup()
@@ -60,7 +63,6 @@ def main():
 	text_x = text_turtle.xcor()
 	text_y = text_turtle.ycor()
 	COMBAT_POSITIONS = [(text_x-70,text_y+33),(text_x-70, text_y+11.5),(text_x -70, text_y-11),(text_x-70,text_y-34)]
-	print(global_index)
 	global_cursor = cursor
 	move(cursor, global_index, COMBAT_POSITIONS)
 
@@ -69,7 +71,7 @@ def main():
 	window.listen()
 	window.onkey(move_up, "Up")
 	window.onkey(move_down, "Down")
-
+	window.onkey(enter, "Return")
 	while window_active(window):
 		time.sleep(0.001)
 
