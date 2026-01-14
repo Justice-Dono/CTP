@@ -11,6 +11,9 @@ global_index = 0
 global COMBAT_POSITIONS
 COMBAT_POSITIONS = None
 
+global combat_return
+combat_return = None
+
 def window_active(window):
 	try:
 		window.update()
@@ -39,7 +42,15 @@ def move_down():
     move(global_cursor, global_index, COMBAT_POSITIONS)
 
 def enter():
-	print(global_index)
+	global combat_return
+	if(global_index == 0):
+		combat_return = "a"
+	if(global_index == 1):
+		combat_return = "d"
+	if(global_index == 2):
+		combat_return = "i"
+	if(global_index == 3):
+		combat_return = "r"
 
 def create_turtle(window, shape):
 	local_turtle = turtle.Turtle()
@@ -52,6 +63,7 @@ def create_turtle(window, shape):
 def main():
 	global global_cursor
 	global COMBAT_POSITIONS
+	global combat_return
 	window = turtle.Screen()
 	window.setup(600,600)
 	window.title("Combat Window")
@@ -65,7 +77,7 @@ def main():
 	COMBAT_POSITIONS = [(text_x-70,text_y+33),(text_x-70, text_y+11.5),(text_x -70, text_y-11),(text_x-70,text_y-34)]
 	global_cursor = cursor
 	move(cursor, global_index, COMBAT_POSITIONS)
-
+	combat_return = "e"
 
 
 	window.listen()
@@ -74,6 +86,17 @@ def main():
 	window.onkey(enter, "Return")
 	while window_active(window):
 		time.sleep(0.001)
+		if combat_return == "a":
+			print("a")
+			
+		if combat_return == "d":
+			print("d")	
+		if combat_return == "i":
+			print("i")
+		if combat_return == "r":
+			print("r")
+		combat_return = "e"
+
 
 	try:
 		window.bye()
