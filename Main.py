@@ -2,6 +2,14 @@ import turtle
 import tkinter as tk
 import time
 
+global global_cursor
+global_cursor = None
+
+global global_index
+global_index = 0
+
+global COMBAT_POSITIONS
+COMBAT_POSITIONS = None
 
 def window_active(window):
 	try:
@@ -13,7 +21,23 @@ def window_active(window):
 def move(turtle, index, pos):
 	local_position = pos[index]
 	turtle.teleport(local_position[0],local_position[1])
-	
+
+def move_up():
+    global global_index
+    if global_index == 0:
+        global_index = 3
+    else:
+        global_index -= 1
+    move(global_cursor, global_index, COMBAT_POSITIONS)
+
+def move_down():
+    global global_index
+    if global_index == 3:
+        global_index = 0
+    else:
+        global_index += 1
+    move(global_cursor, global_index, COMBAT_POSITIONS)
+
 def create_turtle(window, shape):
 	local_turtle = turtle.Turtle()
 	local_turtle.penup()
@@ -23,43 +47,28 @@ def create_turtle(window, shape):
 	return local_turtle
 
 def main():
+	global global_cursor
+	global COMBAT_POSITIONS
 	window = turtle.Screen()
 	window.setup(600,600)
 	window.title("Combat Window")
-	combat_turtle = turtle.Turtle()
+	cursor = turtle.Turtle()
 	#combat_turtle.hideturtle()
-	combat_turtle.penup()
+	cursor.penup()
 	text_turtle= create_turtle(window, "Images/combat-text.gif")
 	text_turtle.teleport(-200,-200)
 	text_x = text_turtle.xcor()
 	text_y = text_turtle.ycor()
 	COMBAT_POSITIONS = [(text_x-70,text_y+33),(text_x-70, text_y+11.5),(text_x -70, text_y-11),(text_x-70,text_y-34)]
-	test = COMBAT_POSITIONS[0]
-	combat_index = 0
-	test = COMBAT_POSITIONS[combat_index]
-	combat_turtle.teleport(test[0],test[1])
+	print(global_index)
+	global_cursor = cursor
+	move(cursor, global_index, COMBAT_POSITIONS)
 
-	
-		
-
-	def move_up():
-		move(0, step)
-
-	def move_down():
-		move(0, -step)
-
-	def move_left():
-		move(-step, 0)
-
-	def move_right():
-		move(step, 0)
 
 
 	window.listen()
 	window.onkey(move_up, "Up")
 	window.onkey(move_down, "Down")
-	window.onkey(move_left, "Left")
-	window.onkey(move_right, "Right")
 
 	while window_active(window):
 		time.sleep(0.001)
