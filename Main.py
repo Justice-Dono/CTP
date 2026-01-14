@@ -15,13 +15,16 @@ def main():
 	window.setup(400,400)
 	window.title("Combat Window")
 	combat_turtle = turtle.Turtle()
-	combat_turtle.hideturtle()
+	#combat_turtle.hideturtle()
 	combat_turtle.penup()
 	combat_turtle.goto(0, 0)
 	style = ("Arial", 36, "bold")
 	combat_turtle.write("Hello World", align="center", font=style)
-
-	# Movement helpers and key bindings
+	window.addshape("cat-laptop.gif")
+	cat_turtle = turtle.Turtle()
+	cat_turtle.penup()
+	cat_turtle.goto(0,0)
+	cat_turtle.shape("cat-laptop.gif")
 	step = 20
 
 	def move(dx, dy):
@@ -30,7 +33,7 @@ def main():
 			combat_turtle.clear()
 			combat_turtle.goto(x + dx, y + dy)
 			combat_turtle.write("Hello World", align="center", font=style)
-			# ensure immediate redraw
+
 			window.update()
 		except (turtle.Terminator, tk.TclError):
 			pass
@@ -47,7 +50,7 @@ def main():
 	def move_right():
 		move(step, 0)
 
-	# bind arrow keys and WASD
+
 	window.listen()
 	window.onkey(move_up, "Up")
 	window.onkey(move_down, "Down")
