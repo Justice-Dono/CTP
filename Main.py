@@ -56,10 +56,10 @@ def main():
 	window.setup(600,600)
 	window.title("Combat Window")
 	cursor = turtle.Turtle()
-	#combat_turtle.hideturtle()
 	cursor.penup()
 	text_turtle= create_turtle(window, "Images/combat-text.gif")
 	text_turtle.teleport(-200,-200)
+	enemy_turtle = create_turtle(window,"Images/Slime.gif")
 	text_x = text_turtle.xcor()
 	text_y = text_turtle.ycor()
 	COMBAT_POSITIONS = [(text_x-70,text_y+33),(text_x-70, text_y+11.5),(text_x -70, text_y-11),(text_x-70,text_y-34)]
