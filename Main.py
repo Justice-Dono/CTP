@@ -9,22 +9,28 @@ def window_active(window):
 		return True
 	except(turtle.Terminator, tk.TclError):
 		return False
-	
+
+def create_turtle(window, shape):
+	local_turtle = turtle.Turtle()
+	local_turtle.penup()
+	local_turtle.goto(0,0)
+	window.addshape(shape)
+	local_turtle.shape(shape)
+	return local_turtle
 def main():
 	window = turtle.Screen()
-	window.setup(400,400)
+	window.setup(600,600)
 	window.title("Combat Window")
 	combat_turtle = turtle.Turtle()
 	#combat_turtle.hideturtle()
 	combat_turtle.penup()
 	combat_turtle.goto(0, 0)
-	style = ("Arial", 36, "bold")
-	combat_turtle.write("Hello World", align="center", font=style)
-	window.addshape("cat-laptop.gif")
-	cat_turtle = turtle.Turtle()
-	cat_turtle.penup()
-	cat_turtle.goto(0,0)
-	cat_turtle.shape("cat-laptop.gif")
+	text_turtle= create_turtle(window, "Images/combat-text.gif")
+	text_turtle.teleport(-200,-200)
+	text_x = text_turtle.xcor()
+	text_y = text_turtle.ycor()
+	combat_turtle.teleport((text_x - 70), text_y-11)
+	COMBAT_POSITIONS = [(text_x-70,text_y+33),(text_x-70, text_y+11.5),(text_x -70, text_y-11)]
 	step = 20
 
 	def move(dx, dy):
@@ -32,8 +38,6 @@ def main():
 			x, y = combat_turtle.position()
 			combat_turtle.clear()
 			combat_turtle.goto(x + dx, y + dy)
-			combat_turtle.write("Hello World", align="center", font=style)
-
 			window.update()
 		except (turtle.Terminator, tk.TclError):
 			pass
