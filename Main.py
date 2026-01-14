@@ -74,10 +74,15 @@ def main():
 	enemy_turtle = create_turtle(window,"Images/Slime.gif")
 	text_x = text_turtle.xcor()
 	text_y = text_turtle.ycor()
+	
 	COMBAT_POSITIONS = [(text_x-70,text_y+33),(text_x-70, text_y+11.5),(text_x -70, text_y-11),(text_x-70,text_y-34)]
 	global_cursor = cursor
 	move(cursor, global_index, COMBAT_POSITIONS)
 	combat_return = "e"
+	update_turtle = turtle.Turtle()
+	update_turtle.penup()
+	update_turtle.hideturtle()
+	update_turtle.goto(200, -100)
 
 
 	window.listen()
@@ -87,14 +92,22 @@ def main():
 	while window_active(window):
 		time.sleep(0.001)
 		if combat_return == "a":
-			print("a")
+			update_turtle.write("Attacked!")
+			time.sleep(1.0)
+			update_turtle.clear()
 			
 		if combat_return == "d":
-			print("d")	
+			update_turtle.write("Defended!")
+			time.sleep(1.0)
+			update_turtle.clear()	
 		if combat_return == "i":
-			print("i")
+			update_turtle.write("Used Item!")
+			time.sleep(1.0)
+			update_turtle.clear()
 		if combat_return == "r":
-			print("r")
+			update_turtle.write("Ran!")
+			time.sleep(1.0)
+			update_turtle.clear()
 		combat_return = "e"
 
 
