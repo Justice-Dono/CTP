@@ -1,6 +1,7 @@
 import turtle
 import tkinter as tk
 import time
+import random
 
 global global_cursor
 global_cursor = None
@@ -134,8 +135,11 @@ def create_turtle(window, shape):
 	return local_turtle
 
 def attack(hero, enemy, attacker):
-	if attacker == "e":
-		hero.damage(enemy.str)
+	if attacker == "p":
+		st = hero.get_st()
+		
+		enemy.damage(hero.get_st())
+		print(enemy.get_hp())
 
 def main():
 	global global_cursor
