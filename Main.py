@@ -25,8 +25,9 @@ class Hero:
 		self.lck = lck
 		self.items = items
 
-	def damage(amount):
-		hp = hp - amount
+	def damage(self, amount):
+		self.hp = self.hp - amount
+	
 	
 	def get_name(self):
 		return self.name
@@ -62,8 +63,8 @@ class Monster:
 		self.speed = speed
 		self.lck = lck
 
-	def damage(amount):
-		hp = hp - amount
+	def damage(self, amount):
+		self.hp = self.hp - amount
 	
 	def get_name(self):
 		return self.name
@@ -160,8 +161,8 @@ def main():
 	update_turtle.hideturtle()
 	update_turtle.goto(200, -100)
 	game_font = "PressStart2P"
-	main_hero = Hero("Yusha",15,10,5,"Sword")
-	monster = Monster("Slime",3,1,6)
+	main_hero = Hero("Yusha",15,10,5,4,5,10,"Sword")
+	monster = Monster("Slime",3,1,1,2,6,3)
 	window.listen()
 	window.onkey(move_up, "Up")
 	window.onkey(move_down, "Down")
