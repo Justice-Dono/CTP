@@ -2,6 +2,7 @@ import turtle
 import tkinter as tk
 import time
 import random
+import math
 
 global global_cursor
 global_cursor = None
@@ -136,10 +137,20 @@ def create_turtle(window, shape):
 
 def attack(hero, enemy, attacker):
 	if attacker == "p":
+		starting_hp = enemy.get_hp()
 		st = hero.get_st()
-		
-		enemy.damage(hero.get_st())
-		print(enemy.get_hp())
+		df = enemy.get_st()
+		st = random.randint(0,st)
+		df = random.randint(0,df)
+		df = math.ceil(df /2)
+		if(st - df < 0):
+			st = 0
+		else:
+			st = st - df
+		enemy.damage(st)
+		ending_hp = enemy.get_hp()
+		damage = abs(ending_hp - starting_hp)
+		return damage 
 
 def main():
 	global global_cursor
@@ -154,6 +165,7 @@ def main():
 	text_turtle= create_turtle(window, "Images/combat-text.gif")
 	text_turtle.teleport(-200,-200)
 	enemy_turtle = create_turtle(window,"Images/Slime.gif")
+	enemy_turtle.penup()
 	text_x = text_turtle.xcor()
 	text_y = text_turtle.ycor()
 	COMBAT_POSITIONS = [(text_x-70,text_y+33),(text_x-70, text_y+11.5),(text_x -70, text_y-11),(text_x-70,text_y-34)]
@@ -174,8 +186,10 @@ def main():
 	while window_active(window):
 		time.sleep(0.001)
 		if combat_return == "a":
+			print(monster.get_hp())
 			update_turtle.write("Attacked!", font=game_font)
 			attack(main_hero, monster, "p")
+			print(monster.get_hp())
 			time.sleep(1.0)
 			update_turtle.clear()
 			
