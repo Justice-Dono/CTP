@@ -14,6 +14,78 @@ COMBAT_POSITIONS = None
 global combat_return
 combat_return = None
 
+class Hero:
+	def __init__(self, name, hp, mp, st, int, speed, lck, items):
+		self.name = name
+		self.hp = hp
+		self.mp = mp
+		self.st = st
+		self.int = int
+		self.speed = speed
+		self.lck = lck
+		self.items = items
+
+	def damage(amount):
+		hp = hp - amount
+	
+	def get_name(self):
+		return self.name
+	
+	def get_hp(self):
+		return self.hp
+	
+	def get_mp(self):
+		return self.mp
+	
+	def get_st(self):
+		return self.st
+	
+	def get_int(self):
+		return self.int
+	
+	def get_speed(self):
+		return self.speed
+	
+	def get_lck(self):
+		return self.lck
+	
+	def get_items(self):
+		return self.items
+
+class Monster:
+	def __init__(self, name, hp, mp, st, int, lck, speed):
+		self.name = name
+		self.hp = hp
+		self.mp = mp
+		self.st = st
+		self.int = int
+		self.speed = speed
+		self.lck = lck
+
+	def damage(amount):
+		hp = hp - amount
+	
+	def get_name(self):
+		return self.name
+	
+	def get_hp(self):
+		return self.hp
+	
+	def get_mp(self):
+		return self.mp
+	
+	def get_st(self):
+		return self.st
+	
+	def get_int(self):
+		return self.int
+	
+	def get_speed(self):
+		return self.speed
+	
+	def get_lck(self):
+		return self.lck
+	
 def window_active(window):
 	try:
 		window.update()
@@ -60,10 +132,15 @@ def create_turtle(window, shape):
 	local_turtle.shape(shape)
 	return local_turtle
 
+def attack(hero, enemy, attacker):
+	if attacker == "e":
+		hero.damage(enemy.str)
+
 def main():
 	global global_cursor
 	global COMBAT_POSITIONS
 	global combat_return
+	game_font = "PressStart2P"
 	window = turtle.Screen()
 	window.setup(600,600)
 	window.title("Combat Window")
@@ -74,7 +151,6 @@ def main():
 	enemy_turtle = create_turtle(window,"Images/Slime.gif")
 	text_x = text_turtle.xcor()
 	text_y = text_turtle.ycor()
-	
 	COMBAT_POSITIONS = [(text_x-70,text_y+33),(text_x-70, text_y+11.5),(text_x -70, text_y-11),(text_x-70,text_y-34)]
 	global_cursor = cursor
 	move(cursor, global_index, COMBAT_POSITIONS)
@@ -83,8 +159,9 @@ def main():
 	update_turtle.penup()
 	update_turtle.hideturtle()
 	update_turtle.goto(200, -100)
-
-
+	game_font = "PressStart2P"
+	main_hero = Hero("Yusha",15,10,5,"Sword")
+	monster = Monster("Slime",3,1,6)
 	window.listen()
 	window.onkey(move_up, "Up")
 	window.onkey(move_down, "Down")
@@ -92,7 +169,8 @@ def main():
 	while window_active(window):
 		time.sleep(0.001)
 		if combat_return == "a":
-			update_turtle.write("Attacked!")
+			update_turtle.write("Attacked!", font=game_font)
+			attack(main_hero, monster, "p")
 			time.sleep(1.0)
 			update_turtle.clear()
 			
