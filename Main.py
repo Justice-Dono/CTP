@@ -259,33 +259,45 @@ def main():
 			#If the player attacks, we run the attack action between the player and the monster.
 			print(monster.get_hp())
 			update_turtle.write("Attacked!", font=game_font)
+			#We attack the monster.
 			damage = attack(main_hero, monster, "p", monster_defense)
 			monster_defense = False
 			time.sleep(1.0)
 			update_turtle.clear()
+			#We print the damage back to the player.
 			update_turtle.write(monster.get_name() +" took " + str(damage) + " damage!", font=game_font)
 			print(monster.get_hp())
 			time.sleep(1.0)
 			update_turtle.clear()
-			
 		if combat_return == "d":
+			#We notify the player that they have defended.
 			update_turtle.write(main_hero.get_name() + " defended!", font=game_font)
 			time.sleep(1.0)
+			#We add the defense variable to the player's combat.
 			hero_defense = True
 			update_turtle.clear()	
 		if combat_return == "i":
-			update_turtle.write("Used Item!")
+			#We print the user has used an item.
+			#This functionality will be expaned in the next step.
+			update_turtle.write("Used Item!", font=game_font)
 			time.sleep(1.0)
 			update_turtle.clear()
 		if combat_return == "r":
-			update_turtle.write("Ran!")
+			#We print that the user has run away. 
+			#This functionality will be expanded in the next step.
+			update_turtle.write("Ran!", font=game_font)
 			time.sleep(1.0)
 			update_turtle.clear()
 			combat_return = "e"
+			"This function continues, skipping the attack phase of the enemy."
 			continue
 		if(combat_return != "e"):
+			#If the player took an action, we run a monster attack phase.
 			damage = attack(main_hero,monster,"e", hero_defense)
 			hero_defense = False
+			update_turtle.write(monster.get_name() +" attacked!", font=game_font)
+			time.sleep(1.0)
+			update_turtle.clear()
 			update_turtle.write(main_hero.get_name() +" took " + str(damage) + " damage!", font=game_font)
 			time.sleep(1.0)
 			update_turtle.clear()
