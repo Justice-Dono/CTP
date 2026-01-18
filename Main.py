@@ -135,11 +135,13 @@ def create_turtle(window, shape):
 	local_turtle.shape(shape)
 	return local_turtle
 
-def attack(hero, enemy, attacker):
+def attack(hero, enemy, attacker, defense):
 	if attacker == "p":
 		starting_hp = enemy.get_hp()
 		st = hero.get_st()
 		df = enemy.get_st()
+		if defense == True:
+			df = df *2
 		st = random.randint(0,st)
 		df = random.randint(0,df)
 		df = math.ceil(df /2)
@@ -151,6 +153,21 @@ def attack(hero, enemy, attacker):
 		ending_hp = enemy.get_hp()
 		damage = abs(ending_hp - starting_hp)
 		return damage 
+	if attacker == "e":
+		starting_hp = hero.get_hp()
+		st = enemy.get_st()
+		df = hero.get_st()
+		st = random.randint(0,st)
+		df = random.randint(0,df)
+		df = math.ceil(df /2)
+		if(st - df < 0):
+			st = 0
+		else:
+			st = st - df
+		hero.damage(st)
+		ending_hp = hero.get_hp()
+		damage = abs(ending_hp - starting_hp)
+		return damage
 
 def main():
 	global global_cursor
@@ -175,27 +192,34 @@ def main():
 	update_turtle = turtle.Turtle()
 	update_turtle.penup()
 	update_turtle.hideturtle()
-	update_turtle.goto(200, -100)
+	update_turtle.goto(100, -100)
 	game_font = "PressStart2P"
 	main_hero = Hero("Yusha",15,10,5,4,5,10,"Sword")
 	monster = Monster("Slime",3,1,1,2,6,3)
 	window.listen()
 	window.onkey(move_up, "Up")
 	window.onkey(move_down, "Down")
+	hero_defense = False
+	monster_defense = False
 	window.onkey(enter, "Return")
 	while window_active(window):
 		time.sleep(0.001)
 		if combat_return == "a":
 			print(monster.get_hp())
 			update_turtle.write("Attacked!", font=game_font)
-			attack(main_hero, monster, "p")
+			damage = attack(main_hero, monster, "p", monster_defense)
+			monster_defense = False
+			time.sleep(1.0)
+			update_turtle.clear()
+			update_turtle.write(monster.get_name() +" took " + str(damage) + " damage!", font=game_font)
 			print(monster.get_hp())
 			time.sleep(1.0)
 			update_turtle.clear()
 			
 		if combat_return == "d":
-			update_turtle.write("Defended!")
+			update_turtle.write(main_hero.get_name() + " defended!", font=game_font)
 			time.sleep(1.0)
+			hero_defense = True
 			update_turtle.clear()	
 		if combat_return == "i":
 			update_turtle.write("Used Item!")
@@ -205,7 +229,15 @@ def main():
 			update_turtle.write("Ran!")
 			time.sleep(1.0)
 			update_turtle.clear()
-		combat_return = "e"
+			combat_return = "e"
+			continue
+		if(combat_return != "e"):
+			damage = attack(main_hero,monster,"e", hero_defense)
+			hero_defense = False
+			update_turtle.write(main_hero.get_name() +" took " + str(damage) + " damage!", font=game_font)
+			time.sleep(1.0)
+			update_turtle.clear()
+			combat_return = "e"
 
 
 	try:
